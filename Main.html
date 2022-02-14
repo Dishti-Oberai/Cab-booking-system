@@ -4,54 +4,100 @@
     <meta charset="utf-8" />
     <title>Flight Search</title>
     <link rel="stylesheet" href="main.css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </head>
   <nav class="navbar container">
     <div class="navbar__logo">
-      <h1>Wings</h1>
+      <h1>Transporter</h1>
     </div>
     <!-- <img src="logowings.png" alt="Error"> -->
-    
-    <div class="navbar__nav">         
+
+    <div class="navbar__nav">
       <ul class="navbar__menu">
-        <li class="navbar__item"><a href="Main.html" class="navbar__link">Home</a></li>
-        <li class="navbar__item"><a href="about.html" class="navbar__link">About</a></li>
+        <li class="navbar__item">
+          <a href="Main.html" class="navbar__link">Home</a>
+        </li>
+        <li class="navbar__item">
+          <a href="about.html" class="navbar__link">About</a>
+        </li>
       </ul>
     </div>
-    
+
     <div class="navbar__buttons">
-      <a href="Login.php"><button class="login__button btn" id="login-btn">Switch Acc.</button></a>
+      <a href="Login.php"
+        ><button class="login__button btn" id="login-btn">
+          Switch Acc.
+        </button></a
+      >
     </div>
   </nav>
+
   <body>
-    
     <div id="flight-form">
       <section>
         <div class="center" id="flightbox">
           <form id="flight-form" method="post" action="action.php">
-            <h3>Search Flights</h3>
-            <div id="flight-depart">
-              <div class="info-box">
-                <input
-                  type="text"
-                  name="flight-depart-text"
-                  placeholder="From"
-                  id="dep-from"
-                />
-                <div id="depart-res"></div>
-              </div>
-              <div class="info-box" id="arrive-box">
-                <input
-                  type="text"
-                  name="flight-arrival-text"
-                  placeholder="To"
-                  id="dep-to"
-                />
-                <div id="arrive-res"></div>
+            <h3>Search Trucks</h3>
+            <!-- <div id="flight-depart">
+            <div class="info-box">
+              <input type="text" name="flight-depart-text" placeholder="From" id="dep-from" />
+              <div id="depart-res"></div>
+            </div>
+            <div class="info-box" id="arrive-box">
+              <input type="text" name="flight-arrival-text" placeholder="To" id="dep-to" />
+              <div id="arrive-res"></div>
+            </div>
+          </div> -->
+            <!-- <div class="container mt-5">
+            <div class="row">
+              <div class="card">
+                <div class="card-header"> -->
+            <h4 class="text-success">From</h4>
+            <!-- </div>
+                <div class="card-body"> -->
+            <form>
+              <!-- <div class="form-group"> -->
+              <label for="state">State</label>
+              <select class="form-control" id="state-dropdown1"></select>
+              <!-- </div> -->
+
+              <!-- <div class="form-group"> -->
+              <label for="city">City</label>
+              <select class="form-control" id="city-dropdown1"></select>
+              <!-- </div> -->
+            </form>
+            <!-- </div>
               </div>
             </div>
+          </div>
+      </div> -->
+            <!-- <div class="container mt-5">
+        <div class="row">
+          <div class="card">
+            <div class="card-header"> -->
+            <h4 class="text-success">To</h4>
+            <!-- </div>
+            <div class="card-body"> -->
+            <form>
+              <!-- <div class="form-group"> -->
+              <label for="state">State</label>
+              <select class="form-control" id="state-dropdown2"></select>
+              <!-- </div> -->
 
+              <!-- <div class="form-group"> -->
+              <label for="city">City</label>
+              <select class="form-control" id="city-dropdown2"></select>
+              <!-- </div> -->
+            </form>
+            <!-- 
+            </div>
+          </div>
+        </div>
+      </div>
+  </div> -->
             <!-- PASSENGER INFO -->
-            <div id="flight-info">
+            <!-- <div id="flight-info">
               <div class="info-box">
                 <label for="adults">No of Persons</label>
                 <select name="adults" id="adults" required>
@@ -62,25 +108,24 @@
                 </select>
               </div>
               <div class="info-box">
-                <label for="class-type">Cabin Class</label>
+                <label for="class-type">Truckin Class</label>
                 <select name="class-type" id="class-type" required>
                   <option value="Economy">Economy</option>
                   <option value="Business">Business</option>
                   <option value="First">First</option>
                 </select>
               </div>
-            </div>
+            </div> -->
             <!-- TRIP TYPE -->
-            <div id="flight-type">
-              
-              <!-- Calender -->
-            <div class="info-box">
+            <!-- <div id="flight-type"> -->
+
+            <!-- Calender -->
+            <!-- <div class="info-box">
               <div id="info-box-calender">
                 <label for="class-type">Date</label>
               <input type="text" id="Ddate" name="Ddate" placeholder="YYYY-MM-DD">
             </div>
-          </div>
-          </div>
+          </div> -->
 
             <!-- SEARCH BUTTON -->
             <div id="flight-search">
@@ -89,16 +134,72 @@
                   type="submit"
                   name="submit-search"
                   id="search-flight"
-                  value="SEARCH FLIGHTS"/>
+                  value="Search Trucks"
+                />
               </div>
             </div>
-            
           </form>
         </div>
+        <!-- </div> -->
       </section>
     </div>
+    <script>
+      $(document).ready(function () {
+        // $('#country-dropdown').on('change', function() {
+        //         var country_id = this.value;
+        $.ajax({
+          url: "states-by-country.php",
+          type: "POST",
+          data: {
+            country_id: 105,
+          },
+          cache: false,
+          success: function (result) {
+            $("#state-dropdown1").html(result);
+            $("#city-dropdown1").html(
+              '<option value="">Select State First</option>'
+            );
+            $("#state-dropdown2").html(result);
+            $("#city-dropdown2").html(
+              '<option value="">Select State First</option>'
+            );
+          },
+        });
+
+        // });
+
+        $("#state-dropdown1").on("change", function () {
+          var state_id = this.value;
+          $.ajax({
+            url: "cities-by-state.php",
+            type: "POST",
+            data: {
+              state_id: state_id,
+            },
+            cache: false,
+            success: function (result) {
+              $("#city-dropdown1").html(result);
+            },
+          });
+        });
+        $("#state-dropdown2").on("change", function () {
+          var state_id = this.value;
+          $.ajax({
+            url: "cities-by-state.php",
+            type: "POST",
+            data: {
+              state_id: state_id,
+            },
+            cache: false,
+            success: function (result) {
+              $("#city-dropdown2").html(result);
+            },
+          });
+        });
+      });
+    </script>
   </body>
-    <!-- <footer class="footer">
+  <!-- <footer class="footer">
       <ul class="social-icon">
         <li class="social-icon__item"><a class="social-icon__link" href="#">
             <ion-icon name="logo-facebook"></ion-icon>
@@ -123,6 +224,13 @@
       </ul>
       <p>&copy;2021 Wings | All Rights Reserved</p>
     </footer> -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>    
+
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+  ></script>
 </html>
